@@ -1,0 +1,10 @@
+version: "3"
+services:
+  webserver:
+    build:
+      context: ./webserver
+      dockerfile: Dockerfile
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./webserver/code:/code
