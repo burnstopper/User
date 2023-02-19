@@ -12,12 +12,12 @@
 После запуска можно посмотреть документацию на страницу http://{HOST}:{PORT}/docs
 
 Конфигурационный файл с переменными окружения должен находиться по пути "User/webserver/code/.env" .
-В нём находятся следующие переменные:
-JWT_SECRET="31fb1ffbdc0cabb88c3da5421b83becb"  --- 32-битный секрет для JWT
-JWE_SECRET="b871f1a2a56f19255f881a183853f575"  --- 32-битный секрет для JWT
-JWT_ALGORITHM="HS256" --- алгоритм кодирования JWT
-JWE_ENCRYPTION_ALGORITHM="A256GCM" --- алгоритм шифрования JWE
-SQLALCHEMY_DATABASE_URI="sqlite+aiosqlite://app/storage/user_databases.db" --- путь к базе данных относительно "User/webserver/code"
-TOKEN_EXPIRE_TIME_IN_DAYS=30 --- срок действия токена пользователя в днях
+В нём находятся следующие переменные:\
+JWT_SECRET="31fb1ffbdc0cabb88c3da5421b83becb"  --- 32-битный секрет для JWT\
+JWE_SECRET="b871f1a2a56f19255f881a183853f575"  --- 32-битный секрет для JWT\
+JWT_ALGORITHM="HS256" --- алгоритм кодирования JWT\
+JWE_ENCRYPTION_ALGORITHM="A256GCM" --- алгоритм шифрования JWE\
+SQLALCHEMY_DATABASE_URI="sqlite+aiosqlite://app/storage/user_databases.db" --- путь к базе данных относительно "User/webserver/code"\
+TOKEN_EXPIRE_TIME_IN_DAYS=30 --- срок действия токена пользователя в днях\
 
 HOST и PORT настраиваются в файле "User/webserver/code/run.sh" .
