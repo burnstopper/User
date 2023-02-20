@@ -21,10 +21,10 @@ if config.config_file_name is not None:
 # for 'autogenerate' support
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
-from database.base_class import Base # noqa
+from app.database.base_class import Base # noqa
 target_metadata = Base.metadata
 
-from core.config import settings # noqa
+from app.core.config import settings # noqa
 config.set_main_option("sqlalchemy.url", settings.SQLALCHEMY_DATABASE_URI)
 
 # other values from the config, defined by the needs of env.py,
