@@ -2,17 +2,33 @@ from datetime import datetime, timedelta
 
 from pydantic import UUID4
 
-from fastapi import HTTPException, status
+from fastapi import HTTPException, status, Depends
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from jose import jwe, JWTError
-from jose.exceptions import JWEParseError
+from jose import jwe
 import jwt
-from jwt.exceptions import DecodeError
+from jose.exceptions import JOSEError
+from jwt import PyJWTError
 
 from app.core.config import settings
 from app.schemas.user import User
 
 from dataclasses import dataclass
+
+security = HTTPBearer()
+
+
+async def has_access(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    """
+    Function that is used to validate the Bearer token in requests from other services
+    """
+    token = credentials.credentials
+
+    if token != settings.BEARER_TOKEN:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Wrong access token",
+        )
 
 
 @dataclass
@@ -41,7 +57,7 @@ async def create_token_for_user(user: User) -> str:
     return encrypted_token.decode("utf-8")
 
 
-def get_values_from_token(token: str):
+async def get_values_from_token(token: str):
     jwe_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="Invalid token",
@@ -66,11 +82,9 @@ def get_values_from_token(token: str):
         user_id: int = payload.get("sub")
 
         token_data = TokenData(user_id=user_id, session_token=session_token)
-    except JWTError:
+    except JOSEError:
         raise jwe_exception
-    except JWEParseError:
-        raise jwe_exception
-    except DecodeError:
+    except PyJWTError:
         raise jwt_exception
 
     # TBD with adding registered users:
@@ -79,5 +93,5 @@ def get_values_from_token(token: str):
     return token_data
 
 
-def get_id_by_token(token: str):
-    return get_values_from_token(token).user_id
+async def get_id_by_token(token: str):
+    return (await get_values_from_token(token)).user_id
