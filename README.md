@@ -20,5 +20,6 @@ JWE_ENCRYPTION_ALGORITHM="A256GCM" --- алгоритм шифрования JWE
 SQLALCHEMY_DATABASE_URI="sqlite+aiosqlite://app/storage/user_databases.db" --- путь к базе данных относительно "User/webserver/code"\
 TOKEN_EXPIRE_TIME_IN_DAYS=30 --- срок действия токена пользователя в днях\
 BEARER_TOKEN="JhbGciOiJIUzI1NiIsInR5I6IkpXVCJ9JzdWIiOiJKdXN0IGFGF2VzcyB0b2tlbiB0byBjb21t5pY2F0ZSB3dGloIFVzIifQ" --- токен доступа, с которым другие сервисы должны посылать запросы\
+HOST="localhost"
 
 HOST и PORT настраиваются в файле "User/webserver/code/run.sh" .
