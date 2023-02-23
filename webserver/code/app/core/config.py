@@ -14,6 +14,7 @@ class Settings(BaseSettings):
     JWE_ENCRYPTION_ALGORITHM: str
 
     BEARER_TOKEN: str
+    HOST: str
 
     class Config:
         # case_sensitive: https://docs.pydantic.dev/usage/settings/#environment-variable-names
