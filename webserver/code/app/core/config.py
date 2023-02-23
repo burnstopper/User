@@ -3,7 +3,6 @@ from pydantic import BaseSettings
 
 
 class Settings(BaseSettings):
-    # CHANGE DB NAME (example.db is used only as template)
     # url naming: https://docs.sqlalchemy.org/en/20/core/engines.html#sqlite
     SQLALCHEMY_DATABASE_URI: str
 
@@ -14,9 +13,12 @@ class Settings(BaseSettings):
     JWE_SECRET: str
     JWE_ENCRYPTION_ALGORITHM: str
 
+    BEARER_TOKEN: str
+
     class Config:
         # case_sensitive: https://docs.pydantic.dev/usage/settings/#environment-variable-names
         case_sensitive = True
+
         # read settings from .env file
         env_file = ".env"
         env_file_encoding = 'utf-8'
