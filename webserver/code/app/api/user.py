@@ -1,4 +1,6 @@
 from fastapi import APIRouter, Depends
+from fastapi.responses import PlainTextResponse
+
 from sqlalchemy.orm import Session
 
 from app.crud.user import user
@@ -9,7 +11,7 @@ from app.api.auth import create_token_for_user, get_id_by_token
 user_router = APIRouter()
 
 
-@user_router.post("/new_respondent", status_code=201)
+@user_router.post("/new_respondent", status_code=201, response_class=PlainTextResponse)
 async def create_anonymous_respondent(db: Session = Depends(get_db)) -> str:
     """
     Create new anonymous user.
@@ -18,9 +20,9 @@ async def create_anonymous_respondent(db: Session = Depends(get_db)) -> str:
     return await create_token_for_user(new_user)
 
 
-@user_router.get("/{user_token}", status_code=200)
+@user_router.get("/{user_token}", status_code=200, response_class=PlainTextResponse)
 async def get_user_id_by_token(user_token: str) -> int:
     """
     Get ID of the user by token.
     """
-    return get_id_by_token(user_token)
+    return await get_id_by_token(user_token)
