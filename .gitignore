@@ -1,5 +1,6 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
+*.pyc
 *.py[cod]
 *$py.class
 
@@ -44,6 +45,8 @@ htmlcov/
 .coverage
 .coverage.*
 .cache
+*.xml
+*.iml
 nosetests.xml
 coverage.xml
 *.cover
