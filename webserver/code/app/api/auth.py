@@ -93,5 +93,5 @@ async def get_values_from_token(token: str):
     return token_data
 
 
-async def get_id_by_token(token: str):
+async def get_id_by_token(token: str) -> int:
     return (await get_values_from_token(token)).user_id

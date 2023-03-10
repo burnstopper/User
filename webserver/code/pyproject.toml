@@ -5,7 +5,6 @@ description = "Async fastapi+sqlalchemy(currently with sqlite) template for back
 authors = ["Blinov Ilya"]
 license = "CC"
 readme = "README.md"
-packages = [{include = "backend_template"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
