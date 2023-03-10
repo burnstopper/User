@@ -1,18 +1,36 @@
-FROM python:3.10
+FROM python:3.11 as requirements-stage
 
 ENV PYTHONDONTWRITEBYTECODE 1
 
-WORKDIR /code/
+#
+WORKDIR /tmp
+
+#
+RUN pip install poetry
+
+#
+COPY code/pyproject.toml code/poetry.lock* /tmp/
+
+#
+RUN poetry export -f requirements.txt --output requirements.txt --without-hashes
+
+#
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.10-slim as production
+
+#
+WORKDIR /code
 COPY ./code /code
 
-RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | \
-    POETRY_HOME=/opt/poetry python && \
-    cd /usr/local/bin && \
-    ln -s /opt/poetry/bin/poetry && \
-    poetry config virtualenvs.create false
-RUN bash -c "poetry install --no-root --no-dev"
+#
+COPY --from=requirements-stage /tmp/requirements.txt /code/requirements.txt
+
+#
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+# Устанавливаем выполняемую при запуске контейнера команду по умолчанию
 
 ENV PYTHONPATH=/code
 
 RUN chmod +x run.sh
 CMD  ["./run.sh"]
+
