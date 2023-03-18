@@ -1,10 +1,24 @@
-version: "3"
+version: "3.3"
 services:
-  webserver:
+  backend:
     build:
-      context: ./webserver
+      context: ./backend
       dockerfile: Dockerfile
     ports:
       - "8002:8002"
     volumes:
-      - ./webserver/code:/code
+      - ./backend/app:/app
+
+  nginx:
+    container_name: nginx
+    build:
+      context: ./
+    ports:
+      - "80:80"
+    depends_on:
+      - burnout-backend
+    networks:
+      - local-net
+networks:
+  local-net:
+    driver: bridge
