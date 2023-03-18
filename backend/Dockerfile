@@ -42,6 +42,7 @@ ENV FASTAPI_ENV=production
 
 COPY --from=builder-base $VENV_PATH $VENV_PATH
 COPY gunicorn_conf.py /gunicorn_conf.py
+COPY .env /.env
 
 # Create user with the name poetry
 RUN groupadd -g 1500 poetry && \
