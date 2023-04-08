@@ -4,16 +4,21 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    ports:
-      - "8002:8002"
     volumes:
       - ./backend/app:/app
+    networks:
+      - local-net
 
   nginx:
-    container_name: nginx
     build:
       context: ./
     ports:
-      - "3000:8002"
+      - "80:8002"
     depends_on:
       - backend
+    networks:
+      - local-net
+
+networks:
+  local-net:
+    driver: bridge

@@ -1,12 +1,9 @@
-import typing
-
 from sqlalchemy.orm import as_declarative, declared_attr
 
 
 # using declarative style
 @as_declarative()
 class Base:
-    id: typing.Any
     __name__: str
 
     # generate __tablename__ automatically

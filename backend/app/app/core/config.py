@@ -8,10 +8,12 @@ class Settings(BaseSettings):
 
     JWT_SECRET: str
     JWT_ALGORITHM: str
-    TOKEN_EXPIRE_TIME_IN_DAYS: int
+    TOKEN_EXPIRATION_TIME_IN_DAYS: int
 
     JWE_SECRET: str
     JWE_ENCRYPTION_ALGORITHM: str
+
+    REQUESTS_EXPIRATION_TIME_IN_MINUTES: int
 
     BEARER_TOKEN: str
     HOST: str

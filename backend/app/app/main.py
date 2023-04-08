@@ -1,25 +1,34 @@
 from fastapi import FastAPI
-from app.api.routers import api_router
+from datetime import timedelta
 
-from fastapi.middleware.cors import CORSMiddleware
+from app.api.routers import api_router
 from app.core.config import settings
+from app.database.session import scheduler, schedule_params, scheduled_delete_of_expired_requests
+from app.crud.verification_requests import crud_registration_request, crud_login_request
 
 app = FastAPI()
 app.include_router(api_router)
 
-# at current no actual origins added
-origins = [
-    f"http://{settings.HOST}:8001",
-    f"https://{settings.HOST}:8001",
-]
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+@app.on_event("startup")
+async def startup_event():
+    scheduler.add_job(kwargs=dict(crud_delete=crud_registration_request.delete_expired_requests,
+                                  expiration_time=timedelta(minutes=settings.REQUESTS_EXPIRATION_TIME_IN_MINUTES),
+                                  ),
+                      **schedule_params)
+    scheduler.add_job(kwargs=dict(crud_delete=crud_login_request.delete_expired_requests,
+                                  expiration_time=timedelta(minutes=settings.REQUESTS_EXPIRATION_TIME_IN_MINUTES),
+                                  ),
+                      **schedule_params)
+    scheduler.start()
+
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    # on shutdown delete all verification requests
+    await scheduled_delete_of_expired_requests(crud_registration_request.delete_expired_requests, timedelta(0))
+    await scheduled_delete_of_expired_requests(crud_login_request.delete_expired_requests, timedelta(0))
+
 
 if __name__ == "__main__":
     # Use this for debugging purposes only
