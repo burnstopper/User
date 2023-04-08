@@ -10,12 +10,19 @@ import jwt
 from jose.exceptions import JOSEError
 from jwt import PyJWTError
 
-from app.core.config import settings
+from app.crud.user import crud_user
 from app.schemas.user import User
+from app.database.dependencies import get_db
+from app.core.config import settings
 
 from dataclasses import dataclass
 
 security = HTTPBearer()
+
+expired_exception = HTTPException(
+    status_code=status.HTTP_401_UNAUTHORIZED,
+    detail="Expired token",
+)
 
 
 async def has_access(credentials: HTTPAuthorizationCredentials = Depends(security)):
@@ -42,7 +49,7 @@ async def create_token_for_user(user: User) -> str:
     # "sub" -- subject, contains user_id
     # "session_token" -- session_token of registered user
     payload = {
-        "exp": datetime.utcnow() + timedelta(days=settings.TOKEN_EXPIRE_TIME_IN_DAYS),
+        "exp": datetime.utcnow() + timedelta(days=settings.TOKEN_EXPIRATION_TIME_IN_DAYS),
         "sub": str(user.id),
         "session_token": str(user.session_token)
     }
@@ -61,10 +68,6 @@ async def get_values_from_token(token: str):
     jwe_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="Invalid token",
-    )
-    jwt_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Expired token",
     )
 
     try:
@@ -85,13 +88,19 @@ async def get_values_from_token(token: str):
     except JOSEError:
         raise jwe_exception
     except PyJWTError:
-        raise jwt_exception
-
-    # TBD with adding registered users:
-    # if session_token != None --- verify it
+        raise expired_exception
 
     return token_data
 
 
 async def get_id_by_token(token: str) -> int:
-    return (await get_values_from_token(token)).user_id
+    user_properties = await get_values_from_token(token)
+
+    # verify token if user is registered
+    if user_properties.session_token is not None:
+        registered_user = await crud_user.get_object_by_id(db=get_db(),
+                                                           requested_id=user_properties.user_id)
+        if user_properties.session_token != registered_user.session_token:
+            raise expired_exception
+
+    return user_properties.user_id
