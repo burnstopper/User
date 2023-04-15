@@ -16,7 +16,6 @@ class Settings(BaseSettings):
     REQUESTS_EXPIRATION_TIME_IN_MINUTES: int
 
     BEARER_TOKEN: str
-    HOST: str
 
     class Config:
         # case_sensitive: https://docs.pydantic.dev/usage/settings/#environment-variable-names
