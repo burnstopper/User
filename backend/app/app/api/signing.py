@@ -8,15 +8,20 @@ from jose import JOSEError
 from app.api.auth import create_token_for_user
 from app.crud.user import crud_user
 from app.crud.email import crud_email
+from app.crud.researcher import crud_researcher
 from app.crud.verification_requests import crud_login_request, crud_registration_request
 from app.schemas.email_forms import EmailForm, EmailContactCreate
 from app.schemas.verification_requests import RegistrationRequestCreate, LoginRequestCreate
+from app.schemas.researcher import ResearcherCreate
 from app.database.dependencies import get_db
 from app.core.config import settings
 
 from app.api.email_utils import verify_email
 
 signing_router = APIRouter()
+# Service will have very few researchers (<=5)
+with open("app/storage/researcher_emails.txt", "r") as file:
+    researcher_addresses = [line.rstrip() for line in file]
 
 
 @signing_router.post("/registration", status_code=status.HTTP_201_CREATED)
@@ -55,8 +60,8 @@ async def registration(registration_data: EmailForm,
                               is_registration=True)
 
 
-@signing_router.get("/registration/verify/{request_id_encrypted}", status_code=status.HTTP_201_CREATED)
-async def register_email(request_id_encrypted: str, db: AsyncSession = Depends(get_db)) -> JSONResponse:
+@signing_router.post("/registration/verify/{request_id_encrypted}", status_code=status.HTTP_201_CREATED)
+async def registration_verify(request_id_encrypted: str, db: AsyncSession = Depends(get_db)) -> JSONResponse:
     """
     Register new user by hashed request id and add his email contact with token
     """
@@ -79,6 +84,13 @@ async def register_email(request_id_encrypted: str, db: AsyncSession = Depends(g
     # now user can log in and can be logged out, for second purpose add session token
     user_to_update = await crud_user.get_object_by_id(db=db, requested_id=register_request.user_id)
     updated_user = await crud_user.update_session_token(db=db, update_obj=user_to_update)
+
+    # Mark this user as researcher if his email in the list
+    if register_request.email_address in researcher_addresses:
+        crud_researcher.create(db=db, obj_in=ResearcherCreate(user_id=register_request.user_id))
+
+    # delete verification request
+    await crud_registration_request.delete_request_by_id(db=db, requested_id=request_id)
 
     # generate new token for this user and return to set it in cookies on frontend
     return JSONResponse(status_code=status.HTTP_201_CREATED,
@@ -109,8 +121,8 @@ async def log_in(registration_data: EmailForm,
                               is_registration=False)
 
 
-@signing_router.get("/login/verify/{request_id_encrypted}", status_code=status.HTTP_200_OK)
-async def log_in_from_email(request_id_encrypted: str, db: AsyncSession = Depends(get_db)) -> JSONResponse:
+@signing_router.post("/login/verify/{request_id_encrypted}", status_code=status.HTTP_200_OK)
+async def log_in_verify(request_id_encrypted: str, db: AsyncSession = Depends(get_db)) -> JSONResponse:
     """
     Log in user by hashed request id and return his token to set in cookies
     """
@@ -122,6 +134,9 @@ async def log_in_from_email(request_id_encrypted: str, db: AsyncSession = Depend
 
     # get user logging in
     user = await crud_user.get_object_by_id(db=db, requested_id=login_request.user_id)
+
+    # delete verification request
+    await crud_login_request.delete_request_by_id(db=db, requested_id=request_id)
 
     # generate token for this user and return to set it in cookies on frontend
     return JSONResponse(status_code=status.HTTP_200_OK,

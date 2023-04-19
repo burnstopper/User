@@ -3,6 +3,7 @@ from fastapi.responses import PlainTextResponse
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.crud.user import crud_user
+from app.crud.researcher import crud_researcher
 from app.database.dependencies import get_db
 
 from app.api.auth import create_token_for_user, get_id_by_token
@@ -27,3 +28,12 @@ async def get_user_id_by_token(user_token: str) -> str:
     """
     # str is required because of PlainTextResponse (without str Docker container fail to encode it)
     return str(await get_id_by_token(user_token))
+
+
+@user_router.get("/check_researcher/{user_token}", status_code=status.HTTP_200_OK)
+async def check_researcher_by_token(user_token: str, db: AsyncSession = Depends(get_db)) -> bool:
+    """
+    Get ID of the user by token.
+    """
+    user_id = await get_id_by_token(user_token)
+    return await crud_researcher.check_by_user_id(db=db, requested_id=user_id)

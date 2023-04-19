@@ -23,7 +23,7 @@ async def verify_email(request_id: int, email_to_verify: EmailStr, is_registrati
                                     settings.JWE_SECRET,
                                     encryption=settings.JWE_ENCRYPTION_ALGORITHM).decode("utf-8")
 
-    environment = Environment(loader=FileSystemLoader("templates/"))
+    environment = Environment(loader=FileSystemLoader("app/templates/"))
 
     if is_registration:
         template_name = "registration_email.html"
