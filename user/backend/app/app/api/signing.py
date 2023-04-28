@@ -72,6 +72,7 @@ async def registration_verify(request_id_encrypted: str, db: AsyncSession = Depe
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid encrypted id",
         )
+
     register_request = await crud_registration_request.get_object_by_id(db=db, requested_id=request_id)
     if register_request is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

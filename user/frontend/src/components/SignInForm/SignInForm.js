@@ -76,7 +76,7 @@ async function handleSubmitClick() { // ADD A MODE_FLAG
     content = document.getElementById('button_submit');
     content.innerHTML = 'Отправить письмо еще раз'
     // send email to given address and receive new token for cookies
-    if (mode === 'signup') { // WORKS, USE AS REF FOR LOGIN
+    if (mode === 'signup') {
         let token = CookieLib.getCookieToken();
         console.log('token: ', token);
         if (token === undefined) {  // if undefined, post request to user to trigger anonymous registration
