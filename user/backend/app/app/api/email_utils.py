@@ -7,7 +7,7 @@ from app.core.config import settings
 
 email_conf = ConnectionConfig(
     MAIL_USERNAME="ulkhan.2014@mail.ru",
-    MAIL_PASSWORD="*",
+    MAIL_PASSWORD="pPtsnxXZ06sdWj7fEavs",
     MAIL_FROM="ulkhan.2014@mail.ru",
     MAIL_PORT=465,
     MAIL_SERVER="smtp.mail.ru",

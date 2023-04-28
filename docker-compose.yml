@@ -1,23 +1,36 @@
-version: "3.3"
+version: "3.9"
 services:
-  backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
-    volumes:
-      - ./backend/app:/app
-    networks:
-      - local-net
+    user-backend:
+      container_name: user-backend
+      build: ./user/backend
+      networks:
+        - local-net
 
-  nginx:
-    build:
-      context: ./
-    ports:
-      - "80:3000"
-    depends_on:
-      - backend
-    networks:
-      - local-net
+
+    user-frontend:
+      extends:
+        file: user/docker-compose.yml
+        service: user-frontend
+
+
+    nginx:
+      container_name: user-nginx
+      build:
+        context: ./nginx
+      ports:
+        - "8001:8001"
+      volumes:
+        - user-front:/usr/share/nginx/user/
+      depends_on:
+        - user-backend
+        - user-frontend
+      networks:
+        - local-net
+
+
+volumes:
+  user-front:
+
 
 networks:
   local-net:

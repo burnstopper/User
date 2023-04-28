@@ -49,8 +49,7 @@ def do_connect(dbapi_connection, connection_record):
     cursor.close()
 
 
-# without this decorator rollbacks will not work
-# it adds second BEGIN and empty raw SQL statements
+# without this decorator rollbacks will not work# it adds second BEGIN and empty raw SQL statements
 @event.listens_for(engine.sync_engine, "begin")
 def do_begin(conn):
     # emit our own BEGIN

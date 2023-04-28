@@ -10,10 +10,10 @@ from app.schemas.email_forms import EmailContactCreate
 class CRUDEmail(CRUDBase[Email, EmailContactCreate]):
 
     async def get_user_id_by_email(self, db: AsyncSession, requested_email: EmailStr) -> int | None:
-        user_id = (await db.execute(select(self.model).where(self.model.email_address == requested_email))).first()
-        if user_id:
+        email_link = (await db.execute(select(self.model).where(self.model.email_address == requested_email))).first()
+        if email_link:
             # result is a tuple with only one item
-            return user_id[0]
+            return email_link[0].user_id
         return None
 
 
