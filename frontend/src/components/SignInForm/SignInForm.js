@@ -3,6 +3,7 @@ import "./SignInForm.css"
 import { Button } from "react-bootstrap"
 import "bootstrap/dist/js/bootstrap.js"
 import axios from "axios"
+//import CookieLib from "../../cookielib-main/index.js"
 import CookieLib from "../../cookielib/index.js"
 
 let mode = 'signup'
@@ -75,27 +76,29 @@ async function handleSubmitClick() { // ADD A MODE_FLAG
     content = document.getElementById('button_submit');
     content.innerHTML = 'Отправить письмо еще раз'
     // send email to given address and receive new token for cookies
-    if (mode === 'signup') {
+    if (mode === 'signup') { // WORKS, USE AS REF FOR LOGIN
         let token = CookieLib.getCookieToken();
-        //console.log(token);
+        console.log('token: ', token);
         if (token === undefined) {  // if undefined, post request to user to trigger anonymous registration
-            await axios.post('http://127.0.0.1/new_token', {})
+            //await axios.post('http://127.0.0.1/new_token', {})
+            await axios.post('/new_token', {})
             //await axios.post('http://127.0.0.1/new-token', {})
                 .then((response) => {
-                    console.log(response);
+                    console.log('new_token response: ', response);
                     //console.log(response.status);
                     token = response.data // ?????????
                     CookieLib.setCookieToken(token)
-                    //console.log(CookieLib.getCookieToken());
+                    console.log('token after new_token: ', CookieLib.getCookieToken());
                 })
                 .catch((error) => {
-                    console.log(error.response.status);
+                    console.log(error.response/*.status*/);
                     //console.log(CookieLib.getCookieToken());
                 });
         }
         //console.log(CookieLib.getCookieToken());
         //CookieLib.removeCookie();
-        axios.post("http://127.0.0.1/registration", {
+        //axios.post("http://127.0.0.1/registration", {
+        axios.post("/registration", {
             email_address: data,
         }, {
             params: {
@@ -104,14 +107,15 @@ async function handleSubmitClick() { // ADD A MODE_FLAG
             },
         })
             .then((response) => {
-                console.log(response);
+                console.log('registration response: ', response);
             });
     } else {
-        axios.post("http://127.0.0.1/login", { // no params for login?
+        //axios.post("http://127.0.0.1/login", { // no params for login?
+        axios.post("/login", {
                 email_address: data,
             })
             .then((response) => {
-                console.log(response);
+                console.log('login response: ', response);
             });
     }
 }
