@@ -89,7 +89,7 @@ const Verification = ({handleClick}) => {   // or login???
                         панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
                     </div>
                     <Button variant="success"
-                            onClick={() => window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+					onClick={() => window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
                             id="button_quiz">
                         Заполнить анкету
                     </Button>

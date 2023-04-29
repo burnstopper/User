@@ -1,11 +1,10 @@
 from typing import Optional
-from jose import jwe
 from fastapi import APIRouter, Depends, BackgroundTasks, HTTPException, status
 from fastapi.responses import JSONResponse
 from sqlalchemy.ext.asyncio import AsyncSession
-from jose import JOSEError
-
 from app.api.auth import create_token_for_user
+from app.api.user import get_user_id_by_token
+from app.api.email_utils import decrypt_id
 from app.crud.user import crud_user
 from app.crud.email import crud_email
 from app.crud.researcher import crud_researcher
@@ -14,8 +13,6 @@ from app.schemas.email_forms import EmailForm, EmailContactCreate
 from app.schemas.verification_requests import RegistrationRequestCreate, LoginRequestCreate
 from app.schemas.researcher import ResearcherCreate
 from app.database.dependencies import get_db
-from app.core.config import settings
-
 from app.api.email_utils import verify_email
 
 signing_router = APIRouter()
@@ -33,9 +30,7 @@ async def registration(registration_data: EmailForm,
     Create registration request and send verification email
     """
     # Get user_id from token or generate it first, if no token
-    # TEST
-    user_id = 1
-    # user_id = await get_user_id_by_token(user_token=user_token)
+    user_id = int(await get_user_id_by_token(user_token=user_token))
 
     # Check if this email already registered
     registered_id = await crud_email.get_user_id_by_email(db=db, requested_email=registration_data.email_address)
@@ -65,13 +60,7 @@ async def registration_verify(request_id_encrypted: str, db: AsyncSession = Depe
     """
     Register new user by hashed request id and add his email contact with token
     """
-    try:
-        request_id = int(jwe.decrypt(request_id_encrypted, settings.JWE_SECRET).decode("utf-8"))
-    except JOSEError:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Invalid encrypted id",
-        )
+    request_id = decrypt_id(request_id_encrypted)
 
     register_request = await crud_registration_request.get_object_by_id(db=db, requested_id=request_id)
     if register_request is None:
@@ -98,7 +87,7 @@ async def registration_verify(request_id_encrypted: str, db: AsyncSession = Depe
                         content={"token": await create_token_for_user(updated_user)})
 
 
-@signing_router.post("/login", status_code=status.HTTP_201_CREATED)
+@signing_router.post("/authorization", status_code=status.HTTP_201_CREATED)
 async def log_in(registration_data: EmailForm,
                  background_tasks: BackgroundTasks,
                  db: AsyncSession = Depends(get_db)) -> None:
@@ -122,12 +111,13 @@ async def log_in(registration_data: EmailForm,
                               is_registration=False)
 
 
-@signing_router.post("/login/verify/{request_id_encrypted}", status_code=status.HTTP_200_OK)
+@signing_router.post("/authorization/verify/{request_id_encrypted}", status_code=status.HTTP_200_OK)
 async def log_in_verify(request_id_encrypted: str, db: AsyncSession = Depends(get_db)) -> JSONResponse:
     """
     Log in user by hashed request id and return his token to set in cookies
     """
-    request_id = int(jwe.decrypt(request_id_encrypted, settings.JWE_SECRET).decode("utf-8"))
+    request_id = decrypt_id(request_id_encrypted)
+
     login_request = await crud_login_request.get_object_by_id(db=db, requested_id=request_id)
     if login_request is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,

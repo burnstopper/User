@@ -1,21 +1,16 @@
+import jwt
 from datetime import datetime, timedelta
-
 from pydantic import UUID4
-
+from dataclasses import dataclass
 from fastapi import HTTPException, status, Depends
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
-
 from jose import jwe
-import jwt
 from jose.exceptions import JOSEError
 from jwt import PyJWTError
-
 from app.crud.user import crud_user
 from app.schemas.user import User
-from app.database.dependencies import get_db
+from app.database.session import AsyncSessionLocal
 from app.core.config import settings
-
-from dataclasses import dataclass
 
 security = HTTPBearer()
 
@@ -98,8 +93,10 @@ async def get_id_by_token(token: str) -> int:
 
     # verify token if user is registered
     if user_properties.session_token is not None:
-        registered_user = await crud_user.get_object_by_id(db=get_db(),
-                                                           requested_id=user_properties.user_id)
+        async with AsyncSessionLocal() as session:
+            async with session.begin():
+                registered_user = await crud_user.get_object_by_id(db=session,
+                                                                   requested_id=user_properties.user_id)
         if user_properties.session_token != registered_user.session_token:
             raise expired_exception
 
