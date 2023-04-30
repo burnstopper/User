@@ -71,7 +71,7 @@ server {
     }
 
     location /authorization/verify/ {
-        proxy_pass http://user-backend:8001/login/verify/;
+        proxy_pass http://user-backend:8001/authorization/verify/;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

@@ -47,25 +47,26 @@ const getStatus = async() => {
         });
     } else {
         //let url = 'http://127.0.0.1/login/verify/' + request_id_encrypted;
-        let url = '/login/verify/' + request_id_encrypted;
+        //let url = '/login/verify/' + request_id_encrypted;
+        let url = '/authorization/verify/' + request_id_encrypted;
         await axios.post(url, {
             request_id_encrypted: request_id_encrypted,
+        }).then((response) => {
+            result = 'login_success'
+            console.log(response);
+            console.log('result in post then: ', result);
+            //console.log(response.status);
+            //let token = response.data('token') // ?????????
+            let token = response.data.token;
+            CookieLib.setCookieToken(token)
+            //console.log(CookieLib.getCookieToken());
         })
-            .then((response) => {
-                result = 'login_success'
-                console.log(response);
-                console.log('result in post then: ', result);
-                //console.log(response.status);
-                let token = response.data('token') // ?????????
-                CookieLib.setCookieToken(token)
-                //console.log(CookieLib.getCookieToken());
-            })
-            .catch((error) => {
-                result = 'login_expired'
-                console.log(error.response/*.status*/);
-                console.log('result in post catch: ', result);
-                //console.log(CookieLib.getCookieToken());
-            });
+        .catch((error) => {
+            result = 'login_expired'
+            console.log(error.response/*.status*/);
+            console.log('result in post catch: ', result);
+            //console.log(CookieLib.getCookieToken());
+        });
     }
 }
 
@@ -89,7 +90,7 @@ const Verification = ({handleClick}) => {   // or login???
                         панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
                     </div>
                     <Button variant="success"
-					onClick={() => window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
+                            onClick={() => window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
                             id="button_quiz">
                         Заполнить анкету
                     </Button>
