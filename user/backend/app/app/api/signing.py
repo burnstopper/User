@@ -15,6 +15,7 @@ from app.schemas.researcher import ResearcherCreate
 from app.database.dependencies import get_db
 from app.api.email_utils import verify_email
 
+
 signing_router = APIRouter()
 # Service will have very few researchers (<=5)
 with open("app/storage/researcher_emails.txt", "r") as file:
@@ -96,15 +97,17 @@ async def log_in(registration_data: EmailForm,
     """
 
     # check if this email already registered and get user id registered with this email address
-    registered_id = (await crud_email.get_user_id_by_email(db=db,
-                                                           requested_email=registration_data.email_address)).user_id
+    registered_id = await crud_email.get_user_id_by_email(db=db,
+                                                           requested_email=registration_data.email_address)
     if registered_id is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                             detail="This email is not registered")
 
     login_request_to_create = LoginRequestCreate(user_id=registered_id)
     login_request = await crud_login_request.create_or_update(db=db, obj_in=login_request_to_create)
-
+    logger.info(login_request)
+    logger.info(registered_id)
+    logger.info(registration_data.email_address)
     background_tasks.add_task(verify_email,
                               request_id=login_request.id,
                               email_to_verify=registration_data.email_address,

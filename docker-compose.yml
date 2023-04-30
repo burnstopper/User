@@ -5,6 +5,8 @@ services:
       build: ./user/backend
       networks:
         - local-net
+      volumes:
+        - ./user/backend/app/app/storage:/app/app/storage
 
 
     user-frontend:
