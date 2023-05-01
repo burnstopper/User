@@ -30,15 +30,20 @@ def upgrade() -> None:
                     sa.PrimaryKeyConstraint('id'),
                     sa.UniqueConstraint('email_address')
                     )
-    op.create_table('loginrequests',
+    op.create_table('loginrequest',
                     sa.Column('id', sa.INTEGER(), nullable=False),
                     sa.Column('user_id', sa.INTEGER(), nullable=False),
                     sa.Column('creation_datetime', sa.DATETIME(), nullable=False),
                     sa.PrimaryKeyConstraint('id')
                     )
+    op.create_table('researcher',
+                    sa.Column('user_id', sa.INTEGER(), nullable=False),
+                    sa.PrimaryKeyConstraint('user_id')
+                    )
 
 
 def downgrade() -> None:
-    op.drop_table('loginrequests')
+    op.drop_table('loginrequest')
     op.drop_table('registrationrequest')
     op.drop_table('email')
+    op.drop_table('researcher')

@@ -10,7 +10,8 @@ from app.database.base import *
 
 # https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html
 # turn on 'echo=True' only for testing purposes
-engine = create_async_engine(settings.SQLALCHEMY_DATABASE_URI, echo=False, pool_pre_ping=True)
+engine = create_async_engine(settings.SQLALCHEMY_DATABASE_URI, echo=False, pool_pre_ping=True,
+                             connect_args={'timeout': 10})
 AsyncSessionLocal = async_sessionmaker(engine, expire_on_commit=False, class_=AsyncSession)
 
 
@@ -53,7 +54,8 @@ def do_connect(dbapi_connection, connection_record):
 @event.listens_for(engine.sync_engine, "begin")
 def do_begin(conn):
     # emit our own BEGIN
-    conn.exec_driver_sql("BEGIN")
+    # IMMEDIATE to let read operations to deal with the most actual information
+    conn.exec_driver_sql("BEGIN IMMEDIATE")
 
 
 async def init_models() -> None:

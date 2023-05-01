@@ -5,4 +5,5 @@
 from app.database.base_class import Base # noqa
 from app.models.user import User # noqa
 from app.models.email import Email # noqa
-from app.models.verification_requests import LoginRequests, RegistrationRequest # noqa
+from app.models.verification_requests import LoginRequest, RegistrationRequest # noqa
+from app.models.researcher import Researcher # noqa
