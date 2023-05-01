@@ -56,9 +56,7 @@ const Verification = ({handleClick}) => {
                         Email успешно подтвержден! Вы зарегистрированы и авторизованы.<br/>Тесты доступны на верхней
                         панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
                     </div>
-                    <Button variant="success"
-                            onClick={() => window.location.href = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'}
-                            id="button_quiz">
+                    <Button variant="success" onClick={redirectSignUp} id="button_quiz">
                         Заполнить анкету
                     </Button>
                 </div>

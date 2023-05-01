@@ -9,23 +9,6 @@ let mode = 'signup'
 let contact_type = 'email'
 let status = 'await'
 
-
-function switchToEmail() {
-    let item = document.getElementById('tg');
-    item.style.display='none';
-    item = document.getElementById('email');
-    item.style.display='flex';
-    contact_type = 'email'
-}
-
-function switchToTelegram() {
-    let item = document.getElementById('email');
-    item.style.display='none';
-    item = document.getElementById('tg');
-    item.style.display='flex';
-    contact_type = 'tg'
-}
-
 function switchMode() {
     if (mode === 'signup') {
         mode = 'login'
@@ -36,14 +19,13 @@ function switchMode() {
     }
 }
 
+function redirectSignUp() {
+    window.location.pathname = "/signup"
+}
+
 async function handleSubmitClick() {
     let data;
-    if (contact_type === 'email') {
-        data = document.getElementById('email_input').value;
-    } else {
-        data = document.getElementById('tg_input').value;
-    }
-    //requests
+    data = document.getElementById('email_input').value;
     if (mode === 'signup') {
         let token = CookieLib.getCookieToken();
         if (token === undefined) {
@@ -98,9 +80,6 @@ async function handleSubmitClick() {
     let content = document.getElementById('email');
     content.style.display='none';
 
-    content = document.getElementById('tg');
-    content.style.display='none';
-
     if (status === 'logged_in') {
         content = document.getElementById('text_mode');
         content.innerHTML = 'Вы уже авторизованы.<br/>Тесты доступны на верхней панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.';
@@ -109,6 +88,10 @@ async function handleSubmitClick() {
         content.style.display='none';
         content = document.getElementById('button_switch_mode');
         content.style.display='none';
+
+        content = document.getElementById('button_quiz');
+        content.style.display='flex';
+
 
     } else if (status === 'signup_taken') {
         content = document.getElementById('text_mode');
@@ -199,14 +182,9 @@ function handleReturnClick() {
         content = document.getElementById('button_switch_mode');
         content.innerHTML = 'Регистрация'
     }
-    //content.style.display='flex';
-    if (contact_type === 'email') {
-        content = document.getElementById('email');
-        content.style.display='flex';
-    } else {
-        content = document.getElementById('tg');
-        content.style.display='flex';
-    }
+    content = document.getElementById('email');
+    content.style.display='flex';
+
     content = document.getElementById('button_switch_mode');
     content.style.display='flex';
 }
@@ -226,24 +204,12 @@ const SignInForm = ({ handleClick }) => {
                     </div>
                     <div className="input-group mb-3" id="email">
                         <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">Выберите контакт
+                                aria-expanded="false" id="type">Email
                         </button>
                         <ul className="dropdown-menu">
                             <li><button className="dropdown-item">Email</button></li>
-                            <li><button className="dropdown-item" onClick={switchToTelegram}>Telegram</button></li>
                         </ul>
                         <input type="text" className="form-control" placeholder="Email" id="email_input" aria-label="Text input with dropdown button"/>
-                    </div>
-                    <div className="input-group mb-3" id="tg">
-                        <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">Выберите контакт
-                        </button>
-                        <ul className="dropdown-menu">
-                            <li><button className="dropdown-item">Telegram</button></li>
-                            <li><button className="dropdown-item" onClick={switchToEmail}>Email</button></li>
-                        </ul>
-                        <span className="input-group-text">@</span>
-                        <input type="text" className="form-control" placeholder="Username" id="tg_input" aria-label="Text input with dropdown button"/>
                     </div>
                     <div className="submit">
                         <Button variant="success" id="button_submit" onClick={handleSubmitClick}>
@@ -252,6 +218,9 @@ const SignInForm = ({ handleClick }) => {
                     </div>
                     <Button variant="success" id="button_return" onClick={handleReturnClick}>
                         Ввести почту заново
+                    </Button>
+                    <Button variant="success" onClick={redirectSignUp} id="button_quiz" style={{display:'none'}}>
+                        Заполнить анкету
                     </Button>
                 </div>
             </div>
@@ -269,24 +238,12 @@ const SignInForm = ({ handleClick }) => {
                     </div>
                     <div className="input-group mb-3" id="email">
                         <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">Выберите контакт
+                                aria-expanded="false">Email
                         </button>
                         <ul className="dropdown-menu">
                             <li><button className="dropdown-item">Email</button></li>
-                            <li><button className="dropdown-item" onClick={switchToTelegram}>Telegram</button></li>
                         </ul>
                         <input type="text" className="form-control" placeholder="Email" id="email_input" aria-label="Text input with dropdown button"/>
-                    </div>
-                    <div className="input-group mb-3" id="tg">
-                        <button className="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">Выберите контакт
-                        </button>
-                        <ul className="dropdown-menu">
-                            <li><button className="dropdown-item">Telegram</button></li>
-                            <li><button className="dropdown-item" onClick={switchToEmail}>Email</button></li>
-                        </ul>
-                        <span className="input-group-text">@</span>
-                        <input type="text" className="form-control" placeholder="Username" id="tg_input" aria-label="Text input with dropdown button"/>
                     </div>
                     <div className="submit">
                         <Button variant="success" id="button_submit" onClick={handleSubmitClick}>
@@ -295,6 +252,9 @@ const SignInForm = ({ handleClick }) => {
                     </div>
                     <Button variant="success" id="button_return" onClick={handleReturnClick}>
                         Ввести почту заново
+                    </Button>
+                    <Button variant="success" onClick={redirectSignUp} id="button_quiz" style={{display:'none'}}>
+                        Заполнить анкету
                     </Button>
                 </div>
             </div>

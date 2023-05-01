@@ -48,6 +48,10 @@
     display: none;
 }
 
+#button_quiz {
+    display: none;
+}
+
 .Button {
     padding-top: 20px;
 }

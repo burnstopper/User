@@ -45,6 +45,10 @@
     padding-top: 20px;
 }
 
+#button_quiz {
+    display: flex;
+}
+
 /* Buttons */
 .btn_default {
     background-color: coral;
