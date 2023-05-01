@@ -26,8 +26,8 @@ function switchToTelegram() {
     contact_type = 'tg'
 }
 
-function switchMode() { // ADD A MODE_FLAG
-    if (mode === 'signup') {  // check by mode
+function switchMode() {
+    if (mode === 'signup') {
         mode = 'login'
         window.location.pathname = '/login'
     } else {
@@ -140,7 +140,7 @@ async function handleSubmitClick() {
         content = document.getElementById('button_submit');
         content.style.display='none';
 
-    } else if (status === 'success') { // режим важен при return click
+    } else if (status === 'success') {
         content = document.getElementById('text_mode');
         content.innerHTML = 'На вашу почту отправлено письмо подтверждения.';
         content = document.getElementById('button_switch_mode');
@@ -157,7 +157,7 @@ async function handleSubmitClick() {
         content.innerHTML = 'Отправить письмо еще раз'
     } else if (status === 'incorrect_format') {
         content = document.getElementById('text_mode');
-        content.innerHTML = 'Некорректный формат email. Пожалуйста, введите почту заново.'; // а если не почта а тг???
+        content.innerHTML = 'Некорректный формат email. Пожалуйста, введите почту заново.';
 
         content = document.getElementById('button_return');
         if (contact_type === 'email') {
