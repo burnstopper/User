@@ -7,24 +7,23 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from fastapi.encoders import jsonable_encoder
 
 from app.crud.base import CRUDBase
-from app.models.verification_requests import LoginRequests, RegistrationRequest
+from app.models.verification_requests import LoginRequest, RegistrationRequest
 from app.schemas.verification_requests import LoginRequestCreate, RegistrationRequestCreate
 
 
-class CRUDVerificationRequest(CRUDBase[LoginRequests | RegistrationRequest,
+class CRUDVerificationRequest(CRUDBase[LoginRequest | RegistrationRequest,
                                        LoginRequestCreate | RegistrationRequestCreate]):
     async def create_or_update(self,
                                db: AsyncSession,
                                obj_in: LoginRequestCreate | RegistrationRequestCreate) \
-            -> LoginRequests | RegistrationRequest | None:
+            -> LoginRequest | RegistrationRequest | None:
         db_object = self.model(**jsonable_encoder(obj_in))
 
-        if type(obj_in) is RegistrationRequestCreate:
-            # in case of registration email must be unique, delete existing request with this email
-            await db.execute(delete(self.model).where(self.model.email_address == obj_in.email_address))
-        elif type(obj_in) is LoginRequestCreate:
-            # in case of logging in user_id should be unique, delete existing request with this user_id
-            await db.execute(delete(self.model).where(self.model.user_id == obj_in.user_id))
+        # if request from this user already exists, do not change database
+        # can not delete or update the old one because of critical perfomance issues caused by database lock
+        existing = (await db.execute(select(self.model).where(self.model.user_id == obj_in.user_id))).first()
+        if existing:
+            return db_object
 
         db.add(db_object)
         await db.flush()
@@ -42,5 +41,5 @@ class CRUDVerificationRequest(CRUDBase[LoginRequests | RegistrationRequest,
         await db.flush()
 
 
-crud_login_request = CRUDVerificationRequest(LoginRequests)
+crud_login_request = CRUDVerificationRequest(LoginRequest)
 crud_registration_request = CRUDVerificationRequest(RegistrationRequest)

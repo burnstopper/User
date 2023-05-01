@@ -78,7 +78,7 @@ async def registration_verify(request_id_encrypted: str, db: AsyncSession = Depe
 
     # Mark this user as researcher if his email in the list
     if register_request.email_address in researcher_addresses:
-        crud_researcher.create(db=db, obj_in=ResearcherCreate(user_id=register_request.user_id))
+        await crud_researcher.create(db=db, obj_in=ResearcherCreate(user_id=register_request.user_id))
 
     # delete verification request
     await crud_registration_request.delete_request_by_id(db=db, requested_id=request_id)
