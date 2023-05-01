@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css?family=Inter&display=swap');
+
+.frame {
+    width: 50%;
+    height: 280px;
+    /*height: 30%;*/
+    display: flex;
+    flex-direction: column;
+    /*margin-top: 50px;*/
+    margin: 10%;
+    align-items: center;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.2s ease-out;
+    justify-content: space-evenly;
+    padding: 30px;
+}
+
+.frame:hover {
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.mode_toggle {
+    display: flex;
+    justify-content: space-around;
+    margin-left: auto;
+    padding-bottom: 10px;
+    padding-top: 10px;
+}
+.submit {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 10px;
+    padding-top: 20px;
+}
+
+.text_general {
+    font-family: "Inter";
+    font-size: 24px;
+    font-weight: 300;
+    padding-bottom: 30px;
+    text-align: center;
+}
+
+.Button {
+    padding-top: 20px;
+}
+
+#button_quiz {
+    display: flex;
+}
+
+/* Buttons */
+.btn_default {
+    background-color: coral;
+    transition-duration: 0.4s;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 25%;
+    height: 50px;
+    align-items: center;
+    font-family: 'Inter';
+    font-size: 24px;
+    cursor: pointer;
+}
+.btn_default:hover {
+    background-color: #DE6D44;
+}
+
+.btn_outline {
+    background-color: white;
+    color: coral;
+    border: 2px solid coral;
+    transition-duration: 0.4s;
+    border-radius: 8px;
+    width: 25%;
+    height: 50px;
+    align-items: center;
+    font-family: 'Inter';
+    font-size: 24px;
+    cursor: pointer;
+}
+.btn_outline:hover {
+    background-color: coral;
+    color: white;
+}
+
+.btn_disable {
+    background-color: #E7E2E2;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    width: 25%;
+    height: 50px;
+    align-items: center;
+    font-family: 'Inter';
+    font-size: 24px;
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn_close {
+    position: absolute;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0);
+    border-color: rgba(255, 255, 255, 0);
+}
+.btn_close::before, .btn_close::after {
+    content: '';
+    position: absolute;
+    width: 24px;
+    height: 3px;
+    background: coral;
+}
+.btn_close::before {
+    transform: rotate(45deg);
+}
+.btn_close::after {
+    transform: rotate(-45deg);
+}

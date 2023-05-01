@@ -1,0 +1,14 @@
+# For building frontend volume
+
+version: "3.9"
+
+services:
+  user-frontend:
+    container_name: user-frontend
+    build:
+      context: ./frontend
+    volumes:
+      - user-front:/app
+
+volumes:
+  user-front:
