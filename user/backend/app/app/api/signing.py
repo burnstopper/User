@@ -30,7 +30,7 @@ async def registration(registration_data: EmailForm,
     """
     Create registration request and send verification email
     """
-    # Get user_id from token or generate it first, if no token
+    # Get user_id from token
     user_id = int(await get_user_id_by_token(user_token=user_token))
 
     # Check if this email already registered
@@ -105,9 +105,7 @@ async def log_in(registration_data: EmailForm,
 
     login_request_to_create = LoginRequestCreate(user_id=registered_id)
     login_request = await crud_login_request.create_or_update(db=db, obj_in=login_request_to_create)
-    logger.info(login_request)
-    logger.info(registered_id)
-    logger.info(registration_data.email_address)
+
     background_tasks.add_task(verify_email,
                               request_id=login_request.id,
                               email_to_verify=registration_data.email_address,
