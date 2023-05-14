@@ -20,7 +20,7 @@ services:
       build:
         context: ./nginx
       ports:
-        - "8001:8001"
+        - "80:3000"
       volumes:
         - user-front:/usr/share/nginx/user/
       depends_on:

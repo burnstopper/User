@@ -1,8 +1,15 @@
 import pathlib
-from pydantic import BaseSettings
+from typing import Optional
+from pydantic import BaseSettings, EmailStr
 
 
 class Settings(BaseSettings):
+    HOST: str = "0.0.0.0"
+    PORT: int
+    WORKERS_PER_CORE: int = 1
+    WEB_CONCURRENCY: Optional[str] = None
+    LOG_LEVEL: str = "error"
+
     # url naming: https://docs.sqlalchemy.org/en/20/core/engines.html#sqlite
     SQLALCHEMY_DATABASE_URI: str
 
@@ -16,6 +23,12 @@ class Settings(BaseSettings):
     REQUESTS_EXPIRATION_TIME_IN_MINUTES: int
 
     BEARER_TOKEN: str
+
+    MAIL_USERNAME: EmailStr
+    MAIL_PASSWORD: str
+    MAIL_FROM: EmailStr
+    MAIL_PORT: int
+    MAIL_SERVER: str
 
     class Config:
         # case_sensitive: https://docs.pydantic.dev/usage/settings/#environment-variable-names
