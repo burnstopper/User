@@ -65,7 +65,8 @@ async def verify_email(request_id: int, email_to_verify: EmailStr, is_registrati
     template = environment.get_template(template_name)
 
     # TEMPORARY FOR DEMONSTRATION PURPOSES
-    content = template.render(link_to_send=f"http://{settings.HOST}/verification/{route_to_send}/{request_id_encrypted}")
+    content = template.render(link_to_send=f"http://{settings.HOST}:{settings.PORT}/verification/"
+                                           f"{route_to_send}/{request_id_encrypted}")
 
     if is_registration:
         subject = "Подтверждение регистрации на Burnout tester"

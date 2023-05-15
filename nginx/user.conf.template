@@ -1,8 +1,10 @@
 server {
-    listen 3000 default_server;
-    listen [::]:3000 default_server;
+    listen 8001 default_server;
+    listen [::]:8001 default_server;
 
     server_name burnoutstopper;
+
+    rewrite ^/$ /signup permanent;
 
     location / {
         root /usr/share/nginx/user;

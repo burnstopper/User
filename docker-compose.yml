@@ -8,7 +8,6 @@ services:
       volumes:
         - ./user/backend/app/app/storage:/app/app/storage
 
-
     user-frontend:
       extends:
         file: user/docker-compose.yml
@@ -16,11 +15,13 @@ services:
 
 
     nginx:
-      container_name: user-nginx
+      container_name: nginx
       build:
         context: ./nginx
+        args:
+          USER_PORT: ${USER_PORT}
       ports:
-        - "80:3000"
+        - "${USER_PORT}:${USER_PORT}"
       volumes:
         - user-front:/usr/share/nginx/user/
       depends_on:

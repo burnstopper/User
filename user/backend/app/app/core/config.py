@@ -4,7 +4,7 @@ from pydantic import BaseSettings, EmailStr
 
 
 class Settings(BaseSettings):
-    HOST: str = "0.0.0.0"
+    HOST: str
     PORT: int
     WORKERS_PER_CORE: int = 1
     WEB_CONCURRENCY: Optional[str] = None

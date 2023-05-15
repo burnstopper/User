@@ -7,7 +7,7 @@ from app.core.config import settings
 
 workers_per_core_str = settings.WORKERS_PER_CORE
 web_concurrency_str = settings.WEB_CONCURRENCY
-host = settings.HOST
+host = "0.0.0.0"
 port = settings.PORT
 use_loglevel = settings.LOG_LEVEL
 use_bind = f"{host}:{port}"
