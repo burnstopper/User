@@ -5,13 +5,19 @@ import axios from "axios";
 import CookieLib from "../../cookielib/index.js"
 
 let result = 'await'
-function redirectSignUp() {
-    window.location.pathname = "/signup"
-}
 
 function redirectLogin() {
     window.location.pathname = "/login"
 }
+
+function redirectSignUp() {
+    window.location.pathname = "/signup"
+}
+
+function redirectQuestionnaire() {
+	window.location.replace("http://185.46.11.65:8002/");
+}
+
 
 const getStatus = async() => {
     let request_url = window.location.pathname;
@@ -83,7 +89,7 @@ const Verification = ({handleClick}) => {
                         Вы авторизованы. Рады снова видеть вас на Burnout tester!<br/>Тесты доступны на верхней
                         панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
                     </div>
-                    <Button variant="success" onClick={redirectSignUp} id="button_quiz">
+                    <Button variant="success" onClick={redirectQuestionnaire} id="button_quiz">
                         Заполнить анкету
                     </Button>
                 </div>

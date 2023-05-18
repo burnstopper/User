@@ -19,10 +19,6 @@ function switchMode() {
     }
 }
 
-function redirectSignUp() {
-    window.location.pathname = "/signup"
-}
-
 function redirectQuestionnaire() {
 	window.location.replace("http://185.46.11.65:8002/");
 }
