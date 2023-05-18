@@ -64,7 +64,6 @@ async def verify_email(request_id: int, email_to_verify: EmailStr, is_registrati
         route_to_send = "login"
     template = environment.get_template(template_name)
 
-    # TEMPORARY FOR DEMONSTRATION PURPOSES
     content = template.render(link_to_send=f"http://{settings.HOST}:{settings.PORT}/verification/"
                                            f"{route_to_send}/{request_id_encrypted}")
 

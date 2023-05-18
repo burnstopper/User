@@ -33,7 +33,7 @@ async def get_user_id_by_token(user_token: str) -> str:
 @user_router.get("/check_researcher/{user_token}", status_code=status.HTTP_200_OK)
 async def check_researcher_by_token(user_token: str, db: AsyncSession = Depends(get_db)) -> bool:
     """
-    Get ID of the user by token.
+    Chekc if the user is researcher by token.
     """
     user_id = await get_id_by_token(user_token)
     return await crud_researcher.check_by_user_id(db=db, requested_id=user_id)
