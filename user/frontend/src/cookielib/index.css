@@ -1,0 +1,47 @@
+@import url('https://fonts.googleapis.com/css?family=Inter&display=swap');
+
+
+.cookie_footer {
+    position:absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 8%;
+    background-color: #b8b4b4;
+    align-items: center;
+    display: flex;
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.cookie_footer_text {
+    align-content: center;
+    width: 70%;
+    font-family: "Inter";
+    font-size: 17px;
+    margin-right: 10%;
+}
+
+.button_container {
+    width: 30%;
+}
+
+/* Buttons */
+.btn_default {
+    background-color: coral;
+    transition-duration: 0.4s;
+    color: white;
+    border: none;
+    border-radius: 16px;
+    width: 100%;
+    height: 40px;
+    align-items: center;
+    font-family: 'Inter';
+    font-size: 16px;
+    cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.btn_default:hover {
+    background-color: #DE6D44;
+}

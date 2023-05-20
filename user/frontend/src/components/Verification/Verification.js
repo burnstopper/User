@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from "react"
 import "./Verification.css"
-import { Button } from "react-bootstrap"
 import axios from "axios";
 import CookieLib from "../../cookielib/index.js"
 
@@ -62,9 +61,11 @@ const Verification = ({handleClick}) => {
                         Email успешно подтвержден! Вы зарегистрированы и авторизованы.<br/>Тесты доступны на верхней
                         панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
                     </div>
-                    <Button variant="success" onClick={redirectSignUp} id="button_quiz">
-                        Заполнить анкету
-                    </Button>
+                    <div className="submit">
+                        <button className="btn_default" onClick={redirectQuestionnaire} id="button_quiz">
+                            Заполнить анкету
+                        </button>
+                    </div>
                 </div>
             </div>
         )
@@ -75,9 +76,11 @@ const Verification = ({handleClick}) => {
                     <div className="text_general" id="text_mode">
                         Срок действия ссылки истек.<br/> Пожалуйста, зарегистрируйтесь заново.
                     </div>
-                    <Button variant="success" onClick={redirectSignUp} id="button_repeat">
-                        Повторить регистрацию
-                    </Button>
+                    <div className="submit">
+                        <button className="btn_default" onClick={redirectSignUp} id="button_repeat">
+                            Повторить регистрацию
+                        </button>
+                    </div>
                 </div>
             </div>
         )
@@ -89,9 +92,11 @@ const Verification = ({handleClick}) => {
                         Вы авторизованы. Рады снова видеть вас на Burnout tester!<br/>Тесты доступны на верхней
                         панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
                     </div>
-                    <Button variant="success" onClick={redirectQuestionnaire} id="button_quiz">
-                        Заполнить анкету
-                    </Button>
+                    <div className="submit">
+                        <button className="btn_default" onClick={redirectQuestionnaire} id="button_quiz">
+                            Заполнить анкету
+                        </button>
+                    </div>
                 </div>
             </div>
         )
@@ -102,9 +107,11 @@ const Verification = ({handleClick}) => {
                     <div className="text_general" id="text_mode">
                         Срок действия ссылки истек.<br/> Пожалуйста, авторизуйтесь заново.
                     </div>
-                    <Button variant="success" onClick={redirectLogin} id="button_repeat">
-                        Повторить авторизацию
-                    </Button>
+                    <div className="submit">
+                        <button className="btn_default" onClick={redirectLogin} id="button_repeat">
+                            Повторить авторизацию
+                        </button>
+                    </div>
                 </div>
             </div>
         )

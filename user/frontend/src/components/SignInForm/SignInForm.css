@@ -3,10 +3,8 @@
 .frame {
     width: 50%;
     height: 280px;
-    /*height: 30%;*/
     display: flex;
     flex-direction: column;
-    /*margin-top: 50px;*/
     margin: 10%;
     align-items: center;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
@@ -52,40 +50,40 @@
     display: none;
 }
 
-.Button {
-    padding-top: 20px;
-}
-
 /* Buttons */
 .btn_default {
     background-color: coral;
     transition-duration: 0.4s;
     color: white;
     border: none;
-    border-radius: 8px;
-    width: 25%;
-    height: 50px;
+    border-radius: 16px;
+    width: 100%;
+    height: 40px;
     align-items: center;
     font-family: 'Inter';
-    font-size: 24px;
+    font-size: 16px;
     cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .btn_default:hover {
     background-color: #DE6D44;
 }
 
 .btn_outline {
-    background-color: white;
+    background-color: #E7E2E2;
     color: coral;
     border: 2px solid coral;
     transition-duration: 0.4s;
-    border-radius: 8px;
-    width: 25%;
-    height: 50px;
+    border-radius: 16px;
+    width: 100%;
+    height: 40px;
     align-items: center;
     font-family: 'Inter';
-    font-size: 24px;
+    font-size: 16px;
     cursor: pointer;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 .btn_outline:hover {
     background-color: coral;
@@ -94,7 +92,7 @@
 
 .btn_disable {
     background-color: #E7E2E2;
-    color: white;
+    color: #E7E2E2;
     border: none;
     border-radius: 8px;
     width: 25%;

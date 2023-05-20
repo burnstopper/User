@@ -1,6 +1,5 @@
 import React from "react"
 import "./SignInForm.css"
-import { Button } from "react-bootstrap"
 import "bootstrap/dist/js/bootstrap.js"
 import axios from "axios"
 import CookieLib from "../../cookielib/index.js"
@@ -159,6 +158,8 @@ async function handleSubmitClick() {
         content.style.display='none';
         content = document.getElementById('button_return');
         content.style.display='none';
+        content = document.getElementById('button_submit');
+        content.style.display='none';
     }
 }
 
@@ -197,7 +198,7 @@ const SignInForm = ({ handleClick }) => {
             <div className="content">
                 <div className="frame">
                     <div className="mode_toggle">
-                        <Button variant="outline-danger" id="button_switch_mode" onClick={switchMode}>Авторизация</Button>
+                        <button className="btn_outline" id="button_switch_mode" onClick={switchMode}>Авторизация</button>
                     </div>
                     <div className="text_general" id="text_mode">
                         Регистрация
@@ -212,16 +213,16 @@ const SignInForm = ({ handleClick }) => {
                         <input type="text" className="form-control" placeholder="Email" id="email_input" aria-label="Text input with dropdown button"/>
                     </div>
                     <div className="submit">
-                        <Button variant="success" id="button_submit" onClick={handleSubmitClick}>
+                        <button className="btn_default" id="button_submit" onClick={handleSubmitClick}>
                             Зарегистрироваться
-                        </Button>
+                        </button>
                     </div>
-                    <Button variant="success" id="button_return" onClick={handleReturnClick}>
+                    <button className="btn_default" id="button_return" onClick={handleReturnClick}>
                         Ввести почту заново
-                    </Button>
-                    <Button variant="success" onClick={redirectQuestionnaire} id="button_quiz" style={{display:'none'}}>
+                    </button>
+                    <button className="btn_default" onClick={redirectQuestionnaire} id="button_quiz" style={{display:'none'}}>
                         Заполнить анкету
-                    </Button>
+                    </button>
                 </div>
             </div>
         )
@@ -231,7 +232,7 @@ const SignInForm = ({ handleClick }) => {
             <div className="content">
                 <div className="frame">
                     <div className="mode_toggle">
-                        <Button variant="outline-danger" id="button_switch_mode" onClick={switchMode}>Регистрация</Button>
+                        <button className="btn_outline" id="button_switch_mode" onClick={switchMode}>Регистрация</button>
                     </div>
                     <div className="text_general" id="text_mode">
                         Авторизация
@@ -246,16 +247,16 @@ const SignInForm = ({ handleClick }) => {
                         <input type="text" className="form-control" placeholder="Email" id="email_input" aria-label="Text input with dropdown button"/>
                     </div>
                     <div className="submit">
-                        <Button variant="success" id="button_submit" onClick={handleSubmitClick}>
+                        <button className="btn_default" id="button_submit" onClick={handleSubmitClick}>
                             Авторизоваться
-                        </Button>
+                        </button>
                     </div>
-                    <Button variant="success" id="button_return" onClick={handleReturnClick}>
+                    <button className="btn_default" id="button_return" onClick={handleReturnClick}>
                         Ввести почту заново
-                    </Button>
-                    <Button variant="success" onClick={redirectQuestionnaire} id="button_quiz" style={{display:'none'}}>
+                    </button>
+                    <button className="btn_default" onClick={redirectQuestionnaire} id="button_quiz" style={{display:'none'}}>
                         Заполнить анкету
-                    </Button>
+                    </button>
                 </div>
             </div>
         )
