@@ -58,7 +58,7 @@ const Verification = ({handleClick}) => {
             <div className="content">
                 <div className="frame" style={{height: '340px'}}>
                     <div className="text_and_input">
-                        <div className="text_and_input" style="justify-content: space-between">
+                        <div className="text_and_input" style={{justifyContent: 'space-between'}}>
                             Email успешно подтвержден! Вы зарегистрированы и авторизованы.<br/>Тесты доступны на верхней
                             панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
                         </div>
@@ -92,7 +92,7 @@ const Verification = ({handleClick}) => {
         return (
             <div className="content">
                 <div className="frame" style={{height: '340px'}}>
-                    <div className="text_and_input" style="justify-content: space-between">
+                    <div className="text_and_input" style={{justifyContent: 'space-between'}}>
                         <div className="text_general" id="text_mode">
                             Вы авторизованы. Рады снова видеть вас на Burnout tester!<br/>Тесты доступны на верхней
                             панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
