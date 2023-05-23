@@ -57,8 +57,8 @@ const Verification = ({handleClick}) => {
         return (
             <div className="content">
                 <div className="frame">
-                    <div className="text_and_input">
-                        <div className="text_general" style={{justifyContent: 'space-between'}}>
+                    <div className="text_and_input" style={{justifyContent: 'space-between'}}>
+                        <div className="text_general">
                             Email успешно подтвержден! Вы зарегистрированы и авторизованы.<br/>Тесты доступны на верхней
                             панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
                         </div>
