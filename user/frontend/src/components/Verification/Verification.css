@@ -2,45 +2,61 @@
 
 .frame {
     width: 50%;
-    height: 280px;
+    height: 300px;
     display: flex;
     flex-direction: column;
     margin: 10%;
     align-items: center;
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.3);
     transition: box-shadow 0.2s ease-out;
-    justify-content: space-evenly;
-    padding: 30px;
+    justify-content: space-between;
+    padding: 2.5%;
 }
 
 .frame:hover {
     box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
 }
 
+.text_and_input {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    vertical-align: middle;
+    /*height: 60%;*/
+    align-items: center;
+    height: 140px;
+    width: 100%;
+}
+
 .mode_toggle {
     display: flex;
     justify-content: space-around;
     margin-left: auto;
-    padding-bottom: 10px;
-    padding-top: 10px;
+    height: 40px;
 }
+
 .submit {
     display: flex;
+    flex-direction: column;
+    vertical-align: middle;
     justify-content: space-around;
-    padding-bottom: 10px;
-    padding-top: 20px;
+    height: 90px;
+    align-items: center;
 }
 
 .text_general {
     font-family: "Inter";
     font-size: 24px;
     font-weight: 300;
-    padding-bottom: 30px;
     text-align: center;
 }
 
-#button_quiz {
-    display: flex;
+#tg {
+    display: none;
+}
+
+#button_return {
+    display: none;
 }
 
 /* Buttons */
@@ -50,7 +66,7 @@
     color: white;
     border: none;
     border-radius: 16px;
-    width: 100%;
+    width: fit-content;
     height: 40px;
     align-items: center;
     font-family: 'Inter';
@@ -59,6 +75,7 @@
     padding-left: 10px;
     padding-right: 10px;
 }
+
 .btn_default:hover {
     background-color: #DE6D44;
 }
@@ -69,7 +86,7 @@
     border: 2px solid coral;
     transition-duration: 0.4s;
     border-radius: 16px;
-    width: 100%;
+    width: fit-content;
     height: 40px;
     align-items: center;
     font-family: 'Inter';

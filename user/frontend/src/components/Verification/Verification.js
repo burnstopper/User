@@ -54,15 +54,19 @@ const Verification = ({handleClick}) => {
             res => setResult(result));
     },[]);
     if (result === 'signup_success') {
+        let content = document.getElementsByClassName('text_and_input');
+        content.style.justifyContent='space-between';
         return (
             <div className="content">
                 <div className="frame" style={{height: '340px'}}>
-                    <div className="text_general" id="text_mode">
-                        Email успешно подтвержден! Вы зарегистрированы и авторизованы.<br/>Тесты доступны на верхней
-                        панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
+                    <div className="text_and_input">
+                        <div className="text_and_input" style="justify-content:'space-between">
+                            Email успешно подтвержден! Вы зарегистрированы и авторизованы.<br/>Тесты доступны на верхней
+                            панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
+                        </div>
                     </div>
                     <div className="submit">
-                        <button className="btn_default" onClick={redirectQuestionnaire} id="button_quiz">
+                        <button className="btn_default" onClick={redirectQuestionnaire} id="button_quiz_verif">
                             Заполнить анкету
                         </button>
                     </div>
@@ -73,8 +77,10 @@ const Verification = ({handleClick}) => {
         return (
             <div className="content">
                 <div className="frame">
-                    <div className="text_general" id="text_mode">
-                        Срок действия ссылки истек.<br/> Пожалуйста, зарегистрируйтесь заново.
+                    <div className="text_and_input">
+                        <div className="text_general" id="text_mode">
+                            Срок действия ссылки истек.<br/> Пожалуйста, зарегистрируйтесь заново.
+                        </div>
                     </div>
                     <div className="submit">
                         <button className="btn_default" onClick={redirectSignUp} id="button_repeat">
@@ -88,12 +94,14 @@ const Verification = ({handleClick}) => {
         return (
             <div className="content">
                 <div className="frame" style={{height: '340px'}}>
-                    <div className="text_general" id="text_mode">
-                        Вы авторизованы. Рады снова видеть вас на Burnout tester!<br/>Тесты доступны на верхней
-                        панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
+                    <div className="text_and_input" style="justify-content:'space-between">
+                        <div className="text_general" id="text_mode">
+                            Вы авторизованы. Рады снова видеть вас на Burnout tester!<br/>Тесты доступны на верхней
+                            панели.<br/>Чтобы принять участие в исследовании, пожалуйста, заполните анкету.
+                        </div>
                     </div>
                     <div className="submit">
-                        <button className="btn_default" onClick={redirectQuestionnaire} id="button_quiz">
+                        <button className="btn_default" onClick={redirectQuestionnaire} id="button_quiz_verif">
                             Заполнить анкету
                         </button>
                     </div>
@@ -104,8 +112,10 @@ const Verification = ({handleClick}) => {
         return (
             <div className="content">
                 <div className="frame">
-                    <div className="text_general" id="text_mode">
-                        Срок действия ссылки истек.<br/> Пожалуйста, авторизуйтесь заново.
+                    <div className="text_and_input">
+                        <div className="text_general" id="text_mode">
+                            Срок действия ссылки истек.<br/> Пожалуйста, авторизуйтесь заново.
+                        </div>
                     </div>
                     <div className="submit">
                         <button className="btn_default" onClick={redirectLogin} id="button_repeat">
