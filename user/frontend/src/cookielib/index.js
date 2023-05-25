@@ -16,7 +16,7 @@ const CookieFooter = () => {
         return (
             <div className="cookie_footer" id="footer">
                 <div className="cookie_footer_text">
-                    Этот сайт использует необходимые cookie. Продолжая пользоваться сервисом, вы даете согласие на их установку.
+                    Этот сайт использует необходимые cookie.<br/>Продолжая пользоваться сервисом, вы даете согласие на их установку.
                 </div>
                 <div className="button_container">
                     <button className="btn_default" onClick={hideCookieFooter}>
