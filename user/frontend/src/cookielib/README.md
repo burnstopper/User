@@ -19,7 +19,7 @@ import CookieLib from "path to cookielib/index.js"
 или
 
 ```javascript
-import { getCookieToken, setCookieToken, removeCookie } from "path to cookielib/index.js";
+import { getCookieToken, setCookieToken, removeCookie, CookieFooter } from "path to cookielib/index.js";
 ```
 
 ### Установка куки
@@ -35,3 +35,9 @@ import { getCookieToken, setCookieToken, removeCookie } from "path to cookielib/
 ### Удаление куки
 
 Для удаления куки используйте `removeCookie()`
+
+### Баннер, уведомляющий об установке куки
+
+#### React:
+
+Пропишите `<CookieLib.CookieFooter/>` последним элементом в `function App()` в файле App.js. Баннер будет отображаться только в том случае, если у пользователя еще не установлены куки.

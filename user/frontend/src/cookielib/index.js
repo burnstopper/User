@@ -16,7 +16,7 @@ const CookieFooter = () => {
         return (
             <div className="cookie_footer" id="footer">
                 <div className="cookie_footer_text">
-                    Этот сайт использует необходимые cookie.<br/>Продолжая пользоваться сервисом, вы даете согласие на их установку.
+                    Этот сайт использует строго необходимые cookie.<br/>Продолжая пользоваться сервисом, вы даете согласие на их установку.
                 </div>
                 <div className="button_container">
                     <button className="btn_default" onClick={hideCookieFooter}>
@@ -31,10 +31,10 @@ const CookieFooter = () => {
 let exp = {
     getCookieToken,
     setCookieToken: (token) => {
-        Cookies.set("token", token, { expires: 365, /*secure: true*/ });
+        Cookies.set("token", token, { expires: 365 });
     },
     removeCookie: () => {
-        Cookies.remove("token"/*, { secure: true }*/);
+        Cookies.remove("token");
     },
     CookieFooter,
 };
