@@ -31,10 +31,10 @@ const CookieFooter = () => {
 let exp = {
     getCookieToken,
     setCookieToken: (token) => {
-        Cookies.set("token", token, { expires: 365, /*secure: true*/ });
+        Cookies.set("token", token, { expires: 365 });
     },
     removeCookie: () => {
-        Cookies.remove("token"/*, { secure: true }*/);
+        Cookies.remove("token");
     },
     CookieFooter,
 };
